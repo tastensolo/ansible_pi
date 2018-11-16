@@ -1,0 +1,77 @@
+---
+
+- name: Add dependencies for PHP versions (Debian).
+  apt:
+    name:
+    - apt-transport-https
+    - ca-certificates
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: Add Ondrej Sury's apt key (Debian).
+  apt_key:
+    url: https://packages.sury.org/php/apt.gpg
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: Add Ondrej Sury's repo (Debian).
+  apt_repository:
+    repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
+    state: present
+  register: php_ondrej_debian_repo
+  when: ansible_distribution == "Debian"
+
+- name: Update apt caches after repo is added (Debian).
+  apt: update_cache=true
+  when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
+
+- name: install php-fpm
+  apt: name={{ item }} state=present
+  with_items:
+  - php7.2
+  - php7.2-apcu
+  - php7.2-cli
+  - php7.2-common
+  - php7.2-curl
+  - php7.2-dev
+  - php7.2-fpm
+  - php7.2-gd
+  - php7.2-imap
+  - php7.2-json
+  - php7.2-mbstring
+  - php7.2-opcache
+  - php7.2-sqlite3
+  - php7.2-xml
+  - php7.2-yaml
+
+- name: ensure php7.2-fpm cgi.fix_pathinfo=0
+  lineinfile: dest='{{item}}' regexp='^(.*)cgi.fix_pathinfo=' line=cgi.fix_pathinfo=0
+  with_items:
+    - /etc/php/7.2/fpm/php.ini
+    - /etc/php/7.2/cli/php.ini
+  notify:
+    - restart php-fpm
+    - restart nginx
+
+- name: enable php7.2 mcrypt module
+  shell: phpenmod mcrypt
+  args:
+    creates: /etc/php/7.2/cli/conf.d/20-mcrypt.ini
+  notify: restart php-fpm
+
+- name: enable php7.2 dom module
+  shell: phpenmod dom
+  args:
+    creates: /etc/php/7.2/cli/conf.d/20-dom.ini
+  notify: restart php-fpm
+
+- name: enable php7.2 mbstring module
+  shell: phpenmod mbstring
+  args:
+    creates: /etc/php/7.2/cli/conf.d/20-mbstring.ini
+
+- name: Creates directory
+  file: path=/var/www/html state=directory
+
+- name: Copy phpinfo file
+  template: src=phpinfo.php dest=/var/www/html/phpinfo.php

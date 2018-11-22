@@ -7,6 +7,7 @@ This Ansible role will install the following on your Raspberry PI device(s):
 - mysql 5.5
 - php-fpm 7.2
 - nginx
+- samba
  
 And adds your public key(s).
 

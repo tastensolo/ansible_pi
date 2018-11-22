@@ -1,0 +1,7 @@
+---
+workgroup: WORKGROUP
+private_share_name: smbshare
+private_share_path: /media/smbshare
+samba_group_name: sambagroup
+samba_users:
+- { name: 'sambaname', smbpasswd: 'password$#' }

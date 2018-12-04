@@ -1,0 +1,10 @@
+additional_disks:
+- disk: /dev/sda
+  number: 1
+  state: present
+  part_start: "0%"
+  part_end: "100%"
+  fstype: ext4
+  mount_path: "/media/medienschubse/"
+  mount_state: mounted
+  mount_opts: noatime

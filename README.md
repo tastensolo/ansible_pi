@@ -8,6 +8,7 @@ This Ansible role will install the following on your Raspberry PI device(s):
 - php-fpm 7.2
 - nginx
 - samba
+- mount
  
 And adds your public key(s).
 

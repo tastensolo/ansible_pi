@@ -1,0 +1,19 @@
+---
+- name: "getting partition UUID"
+  command: /sbin/blkid -s UUID -o value {{ item.disk }}{{ item.number }}
+  register: disk_blkid
+  with_items: "{{ additional_disks }}"
+  changed_when: False
+  become: yes
+
+- name: "mounting disks"
+  mount:
+    path: "{{ item.0.mount_path }}"
+    src: "UUID={{ item.1.stdout }}"
+    fstype: "{{ item.0.fstype }}"
+    opts: "{{ item.0.mount_opts }}"
+    state: "{{ item.0.mount_state }}"
+  with_together:
+  - "{{ additional_disks }}"
+  - "{{ disk_blkid.results }}"
+  become: yes

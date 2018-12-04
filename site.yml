@@ -1,5 +1,5 @@
 ---
-- name: Install MySQL, Nginx, and PHP-FPM
+- name: Install MySQL, Nginx, Samba, PHP-FPM and Mount external Device
   hosts: all
   remote_user: pi
   become: yes
@@ -12,3 +12,4 @@
     - nginx
     - composer
     - samba
+    - mount

@@ -8,7 +8,7 @@
 
 - name: "mounting disks"
   mount:
-    path: "{{ item.0.mount_path }}"
+    path: "{{ mount_path }}"
     src: "UUID={{ item.1.stdout }}"
     fstype: "{{ item.0.fstype }}"
     opts: "{{ item.0.mount_opts }}"
@@ -17,3 +17,11 @@
   - "{{ additional_disks }}"
   - "{{ disk_blkid.results }}"
   become: yes
+
+- name: "set permissions"
+  file:
+    path: "{{ mount_path }}"
+    owner: "{{ mount_user }}"
+    group: "{{ mount_group }}"
+    mode: 0775
+    recurse: yes

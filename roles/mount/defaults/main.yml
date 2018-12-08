@@ -1,3 +1,6 @@
+mount_user: pi
+mount_group: sambapi
+mount_path: /media/medienschubse/
 additional_disks:
 - disk: /dev/sda
   number: 1
@@ -5,6 +8,5 @@ additional_disks:
   part_start: "0%"
   part_end: "100%"
   fstype: ext4
-  mount_path: "/media/medienschubse/"
   mount_state: mounted
   mount_opts: noatime

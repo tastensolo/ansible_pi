@@ -1,0 +1,10 @@
+---
+- name: Create the bash-script to sort images
+  template: src=imageSortByYearAndMonth.sh dest=/home/pi/imageSortByYearAndMonth.sh
+
+- name: install imagetools
+  become: yes
+  become_method: sudo
+  apt: name={{ item }} state=present
+  with_items:
+    - imagemagick

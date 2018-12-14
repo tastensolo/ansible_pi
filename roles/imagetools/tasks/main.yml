@@ -2,9 +2,31 @@
 - name: Create the bash-script to sort images
   template: src=imageSortByYearAndMonth.sh dest=/home/pi/imageSortByYearAndMonth.sh
 
+- name: add the ffmpeg PPA
+  apt_repository:
+    repo: 'ppa:jonathonf/ffmpeg-3'
+
 - name: install imagetools
   become: yes
   become_method: sudo
   apt: name={{ item }} state=present
   with_items:
     - imagemagick
+    - graphicsmagick
+    - ffmpeg
+    - exiftool
+
+- name: Node.js | Install thumbsup (static media gallery)
+  become: yes
+  become_method: sudo
+  command: LZZ_COMPAT=1 npm install -g {{ item }} --unsafe-perm=true
+  with_items:
+  - thumbsup
+
+- name: Creates directory
+  file:
+    state: directory
+    path: "/var/www/html/gallery"
+    owner: pi
+    group: "www-data"
+    mode: 0775

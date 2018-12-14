@@ -13,4 +13,5 @@
     - composer
     - samba
     - mount
-    - imagetools
+    - {role: 'imagetools', tags: 'imagetools'}
+    - {role: 'nodejs', tags: 'nodejs'}

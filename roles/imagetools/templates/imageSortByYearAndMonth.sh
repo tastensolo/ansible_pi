@@ -134,5 +134,5 @@ echo -n "Removing Thumbs.db files ... "
 find ${FINDIN} -name Thumbs.db -delete
 echo "done."
 echo -n "Cleaning up empty directories ... "
-find ${FINDIN} -empty -delete
+find ${FINDIN} -empty -delete -mindepth 1
 echo "done."

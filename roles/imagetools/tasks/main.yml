@@ -21,7 +21,7 @@
   become_method: sudo
   command: LZZ_COMPAT=1 npm install -g {{ item }} --unsafe-perm=true
   with_items:
-  - thumbsup
+  - github:tastensolo/thumbsup
 
 - name: Creates directory
   file:

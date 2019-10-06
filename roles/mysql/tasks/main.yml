@@ -4,8 +4,8 @@
   become_method: sudo
   apt: name={{ item }} state=present
   with_items:
-    - mysql-server
-    - mysql-client
+    - mariadb-server-10.0
+    - mariadb-client-10.0
     - php7.2-mysql
 
 - name: Create the .my.cnf file

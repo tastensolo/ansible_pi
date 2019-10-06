@@ -19,7 +19,7 @@
 - name: configure npm add global directory
   file:
     state: directory
-    path: "~/.npm-global"
+    path: ~/.npm-global
     mode: 0775
 
 - name: configure npm set prefix to global directory
@@ -31,8 +31,9 @@
     line: export PATH=~/.npm-global/bin:$PATH
     create: yes
 
+# command: LZZ_COMPAT=1 npm install -g thumbsup --unsafe-perm
 - name: Node.js | Install thumbsup (static media gallery)
-  command: LZZ_COMPAT=1 npm install -g thumbsup --unsafe-perm
+  command: npm install -g thumbsup --unsafe-perm
 
 - name: Creates directory
   file:
